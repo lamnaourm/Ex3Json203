@@ -1,0 +1,42 @@
+[
+  {
+    "nom": "Thomas TAN",
+    "matricule": "E0001",
+    "genre": "homme",
+    "fonction": "manager",
+    "naissance": "1988-07-01",
+    "salaire": 12000
+  },
+  {
+    "nom": "Alexandre Schepler",
+    "matricule": "E0002",
+    "genre": "homme",
+    "fonction": "Analyste",
+    "naissance": "1980-09-04",
+    "salaire": 9000
+  },
+  {
+    "nom": "Babillot Isablle",
+    "matricule": "E0003",
+    "genre": "femme",
+    "fonction": "Testeur",
+    "naissance": "1966-12-03",
+    "salaire": 18000
+  },
+  {
+    "nom": "Arthur Khalil",
+    "matricule": "E0004",
+    "genre": "homme",
+    "fonction": "Analyste",
+    "naissance": "1984-07-01",
+    "salaire": 10000
+  },
+  {
+    "nom": "Nicole marin",
+    "matricule": "E0005",
+    "genre": "femme",
+    "fonction": "Developpeur",
+    "naissance": "1983-07-01",
+    "salaire": 11000
+  }
+]
