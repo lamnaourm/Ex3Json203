@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Employe> employes;
     Spinner sp;
     TextView tnom, tmat, tfonction, tnaissance, tsalaire;
+RadioGroup grp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         employes = getEllEmps();
+        sp = findViewById(R.id.sp);
+        grp = findViewById(R.id.rgenre);
         tnom = findViewById(R.id.tnom);
         tmat = findViewById(R.id.tmat);
         tfonction = findViewById(R.id.tfonction);
@@ -48,11 +52,16 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Employe ee = employes.get(i);
 
-                tnom.setText(ee.getNom());
-                tmat.setText(ee.getMatricule());
-                tfonction.setText(ee.getFonction());
-                tnaissance.setText(ee.getNaissance());
-                tsalaire.setText(String.valueOf(ee.getSalaire()));
+                tnom.setText("Nom : " + ee.getNom());
+                tmat.setText("Matricule : " + ee.getMatricule());
+                tfonction.setText("Fonction : " + ee.getFonction());
+                tnaissance.setText("Naissance : " + ee.getNaissance());
+                tsalaire.setText("Saiare : " + String.valueOf(ee.getSalaire()));
+
+                if(ee.getGenre().equalsIgnoreCase("homme"))
+                    grp.check(R.id.rd1);
+                else
+                    grp.check(R.id.rd2);
             }
 
             @Override
