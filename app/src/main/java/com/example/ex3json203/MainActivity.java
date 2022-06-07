@@ -1,14 +1,15 @@
 package com.example.ex3json203;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,13 +18,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Employe> employes;
     Spinner sp;
     TextView tnom, tmat, tfonction, tnaissance, tsalaire;
-RadioGroup grp;
+    RadioGroup grp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,22 @@ RadioGroup grp;
         tnaissance = findViewById(R.id.tnais);
         tsalaire = findViewById(R.id.tsal);
 
-        ArrayList<String> nomEmps = new ArrayList<>();
+       ArrayList<HashMap<String, Object>> list_emp = new ArrayList<>();
 
-        for(Employe e : employes)
-            nomEmps.add(e.getNom());
+       for(Employe em : employes){
+           HashMap<String, Object> item = new HashMap<>();
+            item.put("nom",em.getNom());
+            if(em.getGenre().equalsIgnoreCase("homme"))
+                item.put("image",R.drawable.homme);
+            else
+                item.put("image",R.drawable.femme);
+           list_emp.add(item);
+       }
 
-        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_list_item_1,nomEmps);
+       String[] from = {"nom", "image"};
+       int[] to = {R.id.itemnom, R.id.timage};
+
+        SimpleAdapter ad = new SimpleAdapter(this,list_emp,R.layout.item_emp,from,to);
         sp.setAdapter(ad);
 
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -58,7 +70,7 @@ RadioGroup grp;
                 tnaissance.setText("Naissance : " + ee.getNaissance());
                 tsalaire.setText("Saiare : " + String.valueOf(ee.getSalaire()));
 
-                if(ee.getGenre().equalsIgnoreCase("homme"))
+                if (ee.getGenre().equalsIgnoreCase("homme"))
                     grp.check(R.id.rd1);
                 else
                     grp.check(R.id.rd2);
@@ -73,7 +85,7 @@ RadioGroup grp;
     }
 
 
-    public String loadJSonFromRaw(int resId){
+    public String loadJSonFromRaw(int resId) {
         try {
             InputStream in = getResources().openRawResource(resId);
             byte[] data = new byte[in.available()];
@@ -86,13 +98,13 @@ RadioGroup grp;
         return "";
     }
 
-    public ArrayList<Employe> getEllEmps(){
+    public ArrayList<Employe> getEllEmps() {
         ArrayList<Employe> emps = new ArrayList<>();
         String json = loadJSonFromRaw(R.raw.employes);
         try {
             JSONArray array = new JSONArray(json);
 
-            for(int i=0;i<array.length();i++){
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
                 Employe e = new Employe();
                 e.setNom(obj.getString("nom"));
